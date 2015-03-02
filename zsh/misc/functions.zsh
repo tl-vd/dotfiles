@@ -1,3 +1,12 @@
+
+cdtmux(){
+ if [[ $# == 0 ]]; then
+     cd $HOME && tmux send-keys -t 0 "cd $HOME && clear && ls" C-m
+ else
+    cd $1 && tmux send-keys -t 0 "cd $PWD && clear && ls" C-m
+ fi
+}
+
 up(){
     local d=""
     limit=$1
