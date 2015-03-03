@@ -8,12 +8,12 @@ alias -g books="$MEDIA/books"
 alias -g documents="$MEDIA/documents"
 
 # Internal
-alias tst='source ~/envs/tst/bin/activate'
+# alias tst='source ~/envs/tst/bin/activate'
 # alias ls='ls --color=auto'
 alias lsf='ls -a | grep'
 alias ls='ls -FAXh --group-directories-first --color=auto'
 alias cp='cp -i'
-
+alias di='di -f TM1ub -n' # disk-info, -format[fsType, Mountpoint, %(1), Used, Blocks(total)], -noheaders
 # Todo.txt
 alias tdo='todo.sh'
 
