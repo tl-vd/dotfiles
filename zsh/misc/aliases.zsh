@@ -1,6 +1,6 @@
-alias aliae="atom /home/markus/.zsh_modules/misc/aliases.zsh"
-alias functae="atom /home/markus/.zsh_modules/misc/functions.zsh"
-alias zshrc="atom ~/.zshrc"
+alias aliae="$VISUAL /home/markus/code/dotfiles/zsh/misc/aliases.zsh"
+alias functae="$VISUAL /home/markus/code/dotfiles/zsh/misc/functions.zsh"
+alias zshrc="$VISUAL ~/code/dotfiles/zshrc.zsh"
 alias reload='source ~/.zshrc'
 
 alias -g code="$HOME/code"
@@ -16,7 +16,7 @@ alias cp='cp -i'
 alias di='di -f TM1ub -n' # disk-info, -format[fsType, Mountpoint, %(1), Used, Blocks(total)], -noheaders
 # Todo.txt
 alias tdo='todo.sh'
-
+alias xfsettings='xfce4-settings-manager'
 # Python
 # alias -g nb='ipython notebook'
 # alias condapy='/opt/anaconda/bin/python3.4'
