@@ -1,5 +1,7 @@
 # Path
-export PATH="$PATH:$HOME/.cabal/bin"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$HOME/.cabal/bin:$HOME/go/bin"
+export GOBIN="$HOME/go/bin"
 
 # Prompt
 PROMPT="%F{yellow}%{${fg[gray]}%}%3~%(0?. . ${fg[red]}%? )%{${reset_color}%}%F{white}| %(?.%F{magenta}.%F{red})>%f "
