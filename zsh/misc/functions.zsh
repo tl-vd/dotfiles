@@ -1,4 +1,6 @@
 
+WRK_DIR="$HOME/code/dotfiles/zsh/misc"
+
 cdtmux(){
  if [[ $# == 0 ]]; then
      cd $HOME && tmux send-keys -t 0 "cd $HOME && clear && ls" C-m
@@ -7,19 +9,23 @@ cdtmux(){
  fi
 }
 
-up(){
-    local d=""
-    limit=$1
-    for ((i=1 ; i <= limit ; i++))
-        do
-            d=$d/..
-        done
-    d=$(echo $d | sed 's/^\///')
-    if [ -z "$d" ]; then
-        d=..
-    fi
-    cd $d
-  }
+FN_DIR="$WRK_DIR/functions"
+#for file in $FN_DIR; do source $file; done;
+source $FN_DIR/up.zsh
+source $FN_DIR/back.zsh
+#up(){
+#    local d=""
+#    limit=$1
+#    for ((i=1 ; i <= limit ; i++))
+#        do
+#            d=$d/..
+#        done
+#    d=$(echo $d | sed 's/^\///')
+#    if [ -z "$d" ]; then
+#        d=..
+#    fi
+#    cd $d
+#  }
 
 extract () {
  if [ -f $1 ] ; then

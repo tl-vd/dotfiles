@@ -53,6 +53,7 @@ NeoBundle 'bling/vim-airline'
 NeoBundle 'Shougo/vimproc.vim', {'build':'unix'}
 " NeoBundle 'Shougo/vimshell'
 
+NeoBundle 'majutsushi/tagbar'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
 let g:UltiSnipsExpandTrigger = '<c-Space>'
@@ -135,7 +136,7 @@ let g:mapleader=' '
 map <Leader>w :w<CR>:echo "Written at " . strftime("%c")<CR><ESC>
 map <Leader>q :q<CR>
 map <Leader>! :q!<CR>
-map <Leader>t :SyntasticToggleMode<CR>
+map <Leader>p :SyntasticToggleMode<CR>
 map <Leader>e :StripWhitespace<CR>
 
 map <Leader><Right> :vertical resize +5<CR>
@@ -147,7 +148,12 @@ map <Leader>v :vs
 map <Leader>g :sp
 map <Leader>s :%s//<Left>
 vmap <Leader>s :s//<Left>
-nnoremap <Leader>z za
+"nnoremap <Leader>z za
+
+" Tagbar
+nmap <Leader>= :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
 "}}}
 " Remaps"{{{
 nnoremap L g_
@@ -157,6 +163,7 @@ nnoremap j gj
 
 inoremap <S-CR> <Esc>A<CR>
 inoremap <C-u> <Esc>
+inoremap <C-SPACE> <Esc>
 
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>

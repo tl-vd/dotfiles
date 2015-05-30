@@ -1,12 +1,13 @@
 # Path
 export GOPATH="$HOME/go"
-export PATH="$PATH:$HOME/.cabal/bin:$HOME/go/bin"
+export PATH="$PATH:$HOME/.cabal/bin:$HOME/go/bin:$HOME/code/envs/elm/Elm-Platform/0.15/bin"
 export GOBIN="$HOME/go/bin"
 
 # Prompt
 PROMPT="%F{yellow}%{${fg[gray]}%}%3~%(0?. . ${fg[red]}%? )%{${reset_color}%}%F{white}| %(?.%F{magenta}.%F{red})>%f "
 
 # Options
+setopt extended_glob
 setopt autocd
 setopt correct
 setopt globdots
@@ -15,7 +16,7 @@ setopt noclobber    # Bang overrides.
 
 # Variables
 export EDITOR='vim'
-export VISUAL='vim'
+export VISUAL='gvim'
 
 # Modules
 extpath="$HOME/code/dotfiles/zsh"

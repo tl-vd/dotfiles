@@ -13,9 +13,9 @@ function! haskell#enter()
     setf haskell
 
     " Use two-space indentation
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
+    setlocal shiftwidth=4
+    setlocal tabstop=4
+    setlocal softtabstop=4
 
     " Create tabularize mappings for aligning type signatures
 "    AddTabularPattern! hs_type_sig / \?\(->\|::\|=>\)/l0r1
@@ -24,8 +24,8 @@ function! haskell#enter()
 "    inoremap => =><ESC>:Tabularize hs_type_sig<CR>A
 
     " ...for aligning comments.
-    AddTabularPattern! hs_comment / \?--/l0r1
-    inoremap -- --<ESC>:Tabularize hs_comment<CR>A
+"    AddTabularPattern! hs_comment / \?--/l0r1
+"    inoremap -- --<ESC>:Tabularize hs_comment<CR>A
 
     " Configuration for syntastic
     let g:syntastic_haskell_checkers=['ghc_mod', 'hlint']
@@ -42,6 +42,13 @@ function! haskell#enter()
 
     let g:syntastic_haskell_ghc_mod_args=ghc_args_string
     let g:syntastic_haskell_hdevtools_args=ghc_args_string
+
+    " TEMP: unsorted
+    " Reload
+    map <silent> tu :call GHC_BrowseAll()<CR>
+    " Infer type
+    map <silent> tw :call GHC_ShowType(1)<CR>
+
 endfun
 
 function! haskell#leave()

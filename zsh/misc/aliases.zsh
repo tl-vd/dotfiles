@@ -1,11 +1,11 @@
 alias aliae="$VISUAL /home/markus/code/dotfiles/zsh/misc/aliases.zsh"
 alias functae="$VISUAL /home/markus/code/dotfiles/zsh/misc/functions.zsh"
 alias zshrc="$VISUAL ~/code/dotfiles/zshrc.zsh"
-alias reload='source ~/.zshrc'
-
-alias -g code="$HOME/code"
-alias -g books="$MEDIA/books"
-alias -g documents="$MEDIA/documents"
+alias reload='source ~/code/dotfiles/zshrc.zsh'
+alias back='cd $OLDPWD'
+#alias -g code="$HOME/code"
+#alias -g books="$MEDIA/books"
+#alias -g documents="$MEDIA/documents"
 
 # Internal
 # alias tst='source ~/envs/tst/bin/activate'
@@ -15,7 +15,7 @@ alias ls='ls -FAXh --group-directories-first --color=auto'
 alias cp='cp -i'
 alias di='di -f TM1ub -n' # disk-info, -format[fsType, Mountpoint, %(1), Used, Blocks(total)], -noheaders
 # Todo.txt
-alias tdo='todo.sh'
+#alias tdo='todo.sh'
 alias xfsettings='xfce4-settings-manager'
 # Python
 # alias -g nb='ipython notebook'
