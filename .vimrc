@@ -27,7 +27,9 @@ set wildmode=longest:list
 set virtualedit=onemore
 "}}}
 " Plugins"{{{
-filetype off
+filetype on
+"filetype plugin indent on
+
 set runtimepath+=~/.vim/bundle/neobundle.vim
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -37,7 +39,7 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tomtom/tlib_vim'
-NeoBundle 'ntpeters/vim-better-whitespace'
+"NeoBundle 'ntpeters/vim-better-whitespace'
 
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'nanotech/jellybeans.vim'
@@ -52,17 +54,30 @@ NeoBundle 'bling/vim-airline'
 
 NeoBundle 'Shougo/vimproc.vim', {'build':'unix'}
 " NeoBundle 'Shougo/vimshell'
+"NeoBundle 'jmcantrell/vim-virtualenv'
+"let g:virtualenv_directory = '~/code/envs/python'
 
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
-let g:UltiSnipsExpandTrigger = '<c-Space>'
+let g:UltiSnipsExpandTrigger = '<TAB>'
+let g:UltiSnipsJumpForwardTrigger = '<S-TAB>'
+"let g:UltiSnipsJumpBackwardTrigger = '<c-Space'
 
-" NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'rdnetto/YCM-Generator'
+NeoBundle 'Valloric/YouCompleteMe'
 "let g:ycm_allow_changing_updatetime = 0
-"let g:ycm_confirm_extra_conf=0
-"let g:ycm_semantic_triggers = {'haskell' : ['.', '(']}
-"let g:ycm_filetype_blacklist = {'haskell': 1}
+let g:ycm_confirm_extra_conf=0
+let g:ycm_semantic_triggers = {'haskell' : ['.', '(']}
+let g:ycm_filetype_blacklist = {'haskell': 1}
+let g:ycm_key_list_select_completion = ['<CR>']
+let g:ycm_key_list_previous_completion = ['<C-CR>']
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
+let g:ycm_key_invoke_completion = '<C-Space>'
+"let g:ycm_enable_diagnostic_highlighting = 0
+"let g:ycm_show_diagnostics_ui = 0
+"let g:ycm_enable_diagnostic_signs = 0
 
 call CtrlPSetup()
 call SyntasticSetup()
@@ -93,6 +108,7 @@ call BackupAndSwapFiles()
 call SyntaxHighlighting()
 call SetupTags()
 call NoteSetup()
+"call VirtualEnvActivate(vim)
 "}}}
 " GUI"{{{
 if has("gui_running")
@@ -118,7 +134,10 @@ augroup filetypedetect
         \ "python":    "py",
         \ "asciidoc":  "adoc",
         \ "opencl":    "cl",
-        \ "note":      "note"
+        \ "note":      "note",
+        \ "idris":     "idr",
+        \ "cpp":       "cpp",
+        \ "elm":       "elm"
         \ }
     for [lang, ext] in items(language_extensions)
         if exists('*' . lang . '#enter')
@@ -133,11 +152,12 @@ augroup END
 " Keybindings"{{{
 " Leader"{{{
 let g:mapleader=' '
+let g:maplocalleader=','
 map <Leader>w :w<CR>:echo "Written at " . strftime("%c")<CR><ESC>
 map <Leader>q :q<CR>
 map <Leader>! :q!<CR>
-map <Leader>p :SyntasticToggleMode<CR>
-map <Leader>e :StripWhitespace<CR>
+map <Leader>t :SyntasticToggleMode<CR>
+"map <Leader>e :StripWhitespace<CR>
 
 map <Leader><Right> :vertical resize +5<CR>
 map <Leader><cg> :vertical resize -5<CR>
@@ -146,9 +166,9 @@ map <Leader><Up> :resize -5<CR>
 
 map <Leader>v :vs
 map <Leader>g :sp
-map <Leader>s :%s//<Left>
-vmap <Leader>s :s//<Left>
-"nnoremap <Leader>z za
+map <Leader>s :%s//g<Left><Left>
+vmap <Leader>s :s//g<Left><Left>
+nnoremap <Leader>z za
 
 " Tagbar
 nmap <Leader>= :TagbarToggle<CR>
@@ -162,8 +182,12 @@ nnoremap k gk
 nnoremap j gj
 
 inoremap <S-CR> <Esc>A<CR>
-inoremap <C-u> <Esc>
-inoremap <C-SPACE> <Esc>
+"inoremap <S-Space> <Esc>la
+inoremap <C-c> <Esc>
+inoremap <C-y> <Esc>
+inoremap <C-i> <Esc>
+"inoremap <C-Space> <Esc>
+"inoremap <C-@> <C-Space>
 
 inoremap <C-j> <Down>
 inoremap <C-k> <Up>
@@ -239,7 +263,29 @@ endfunction
 function! CodeFolding()
     " Enable code folding "
     set foldenable
+    
+    fu! CustomFoldText()
+      "get first non-blank line
+      let fs = v:foldstart
+      while getline(fs) =~ '^\s*$' | let fs = nextnonblank(fs + 1)
+      endwhile
+      if fs > v:foldend
+          let line = getline(v:foldstart)
+      else
+          let line = substitute(getline(fs), '\t', repeat(' ', &tabstop), 'g')
+     endif
+ 
+     let w = winwidth(0) - &foldcolumn - (&number ? 8 : 0)
+     let foldSize = 1 + v:foldend - v:foldstart
+     let foldSizeStr = " " . foldSize . " lines "
+     let foldLevelStr = repeat("+--", v:foldlevel)
+     let lineCount = line("$")
+     let foldPercentage = printf("[%.1f", (foldSize*1.0)/lineCount*100) . "%] "
+     let expansionString = repeat(".", w - strwidth(foldSizeStr.line.foldLevelStr.foldPercentage))
+     return line . expansionString . foldSizeStr . foldPercentage . foldLevelStr
+    endf
 
+    set foldtext=CustomFoldText()
     " C-style folding "
     set foldmethod=marker
     set foldmarker={{{,}}}

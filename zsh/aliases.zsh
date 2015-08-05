@@ -17,9 +17,9 @@ alias di='di -f TM1ub -n' # disk-info, -format[fsType, Mountpoint, %(1), Used, B
 # Todo.txt
 #alias tdo='todo.sh'
 alias xfsettings='xfce4-settings-manager'
-# Python
-# alias -g nb='ipython notebook'
-# alias condapy='/opt/anaconda/bin/python3.4'
-# alias pipu="pip freeze --local | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U"
-# alias python27='/bin/python2.7'
-# alias clipse='~/develop/liclipse/LiClipse'
+alias ycmconfig='/home/markus/.vim/bundle/YCM-Generator/config_gen.py'
+# IHaskell and IPython
+nb='source /home/markus/code/envs/ihaskell/pyth/bin/activate && ipython notebook --profile=ihaskell'
+alias nb=$nb
+alias notebook=$nb
+

@@ -1,31 +1,29 @@
 
-WRK_DIR="$HOME/code/dotfiles/zsh/misc"
+#WRK_DIR="$HOME/code/dotfiles/zsh/misc"
 
-cdtmux(){
- if [[ $# == 0 ]]; then
-     cd $HOME && tmux send-keys -t 0 "cd $HOME && clear && ls" C-m
- else
-    cd $1 && tmux send-keys -t 0 "cd $PWD && clear && ls" C-m
- fi
-}
+#cdtmux(){
+# if [[ $# == 0 ]]; then
+#     cd $HOME && tmux send-keys -t 0 "cd $HOME && clear && ls" C-m
+# else
+#    cd $1 && tmux send-keys -t 0 "cd $PWD && clear && ls" C-m
+# fi
+#}
 
-FN_DIR="$WRK_DIR/functions"
-#for file in $FN_DIR; do source $file; done;
-source $FN_DIR/up.zsh
-source $FN_DIR/back.zsh
-#up(){
-#    local d=""
-#    limit=$1
-#    for ((i=1 ; i <= limit ; i++))
-#        do
-#            d=$d/..
-#        done
-#    d=$(echo $d | sed 's/^\///')
-#    if [ -z "$d" ]; then
-#        d=..
-#    fi
-#    cd $d
-#  }
+#FN_DIR="$WRK_DIR/functions"
+#source $FN_DIR/back.zsh
+up(){
+    local d=""
+    limit=$1
+    for ((i=1 ; i <= limit ; i++))
+        do
+            d=$d/..
+        done
+    d=$(echo $d | sed 's/^\///')
+    if [ -z "$d" ]; then
+        d=..
+    fi
+    cd $d
+  }
 
 extract () {
  if [ -f $1 ] ; then
@@ -48,13 +46,13 @@ extract () {
  fi
  }
 
-#  s() {
-#     if [[ $# == 0 ]]; then
-#         sudo $(history -p '!!')
-#     else
-#         sudo "$@"
-#     fi
-# }
+s() {
+    if [[ $# == 0 ]]; then
+        sudo $(fc -ln -1 -1)  # Latest command in history
+    else
+        sudo "$@"
+    fi
+}
 
 backup() {
   if [[ -f $1 ]]; then
@@ -69,22 +67,22 @@ backup() {
   fi
 }
 
-activate() {
-  if [[ $# == 0 ]]; then
-    if [[ -f $VENV_DEFAULT ]]; then
-      source $VENV_DEFAULT
-    else
-      echo "No default venv and no arguments given, set DEFAULT_ENV to the path of your activate script."
-    fi
-  else
-    local tmp="$VENV_PATH/$1"
-    if [[ -d $tmp ]]; then
-      source "$tmp/bin/activate"
-    else
-      echo "Argument not in VENV_PATH, or VENV_PATH not set."
-    fi
-  fi
-}
+#activate() {
+#  if [[ $# == 0 ]]; then
+#    if [[ -f $VENV_DEFAULT ]]; then
+#      source $VENV_DEFAULT
+#    else
+#      echo "No default venv and no arguments given, set DEFAULT_ENV to the path of your activate script."
+#    fi
+#  else
+#    local tmp="$VENV_PATH/$1"
+#    if [[ -d $tmp ]]; then
+#      source "$tmp/bin/activate"
+#    else
+#      echo "Argument not in VENV_PATH, or VENV_PATH not set."
+#    fi
+#  fi
+#}
 
 # #
 # #   recursive cd  (source in .bash_aliases)
