@@ -27,7 +27,7 @@ function! cpp#enter()
     
     set foldmethod=syntax
 
-    let g:ycm_always_populate_location_list = 1
+    let g:ycm_always_populate_location_list = 0
 
     "let g:syntastic_cpp_compiler = "clang++"
     "let g:syntastic_cpp_compiler_options = "-std=c++11"

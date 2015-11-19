@@ -84,84 +84,84 @@ backup() {
 #  fi
 #}
 
-# #
-# #   recursive cd  (source in .bash_aliases)
-# #
-# #   c            go to last dir
-# #   c path       go to path, if not in cwd search forward and backward for
-# #                *PaTh* in tree
-
-# # (optional) use env var HUMANISM_CD_DEPTH for maxdepth
-# if [ -z $HUMANISM_CD_DEPTH ]; then
-#     HUMANISM_CD_DEPTH=8
-# fi
-# dir_in_tree () {
-#     local BASEDIR="$1"
-#     local SEARCH="${@:2}"
-#     local DEPTH=1
-#     local DIR
-#     for DEPTH in $(seq 1 $HUMANISM_CD_DEPTH); do
-#         # timeout forces stop after one second
-#         if [ "Linux" = "$OS" ]; then
-#             DIR=$(timeout -s SIGKILL 1s \
-#                   /usr/bin/env find $BASEDIR -mindepth $DEPTH -maxdepth $DEPTH -iname "*$SEARCH*" -type d \
-#                            -printf "%C@ %p\n" 2>/dev/null | sort -n | tail -1 | awk '{$1=""; print}' )
-#                         #-exec stat --format "%Y##%n" humanism.sh/dbg (NOTE ISSUE WITH SPACE)
-#         else
-#             DIRS=$(/usr/bin/env find $BASEDIR -depth $DEPTH -iname "*$SEARCH*" -type d \
-#                        -exec stat -f "%m %N" {} 2>/dev/null \; & sleep 0.5; kill $! 2>/dev/null)
-#             if [[ $DIRS ]]; then
-#                 DIR=$(echo "$DIRS"  | sort -n | tail -1 | awk '{$1=""; print}')
-#             fi
-#         fi
-
-#         if [[ $DIR ]]; then
-#             # remove trailing space
-#             echo "${DIR## }"
-#             break
-#         fi
-#         DEPTH=$(($DEPTH+1))
-#     done
-# }
-# c () {
-#     # no args: go to last dir
-#     if [ $# -eq 0 ]; then
-#         if [ -f ~/.cwd ]; then
-#                 builtin cd "`cat ~/.cwd`"
-#         else
-#                 builtin cd
-#         fi
-#         pwd > ~/.cwd
-#         return 0
-#     # arg1: if has a slash then assume its just a direct path we do not need to find
-#     # oh and, suck up all args as the path. hence no more: cd ./a\ dir\ with\ spaces/
-#     elif [[ "$1" == */* ]]; then
-#             builtin cd "$*"
-#             pwd > ~/.cwd
-#             return 0
-#     # arg1: has no slashes so find it in the cwd
-#     else
-#         D=$(dir_in_tree . "$*")
-#         if [[ "$D" ]]; then
-#             builtin cd "$D"
-#             pwd > ~/.cwd
-#             return 0
-#         fi
-#         # now search backward and upward
-#         echo "<>"
-#         local FINDBASEDIR=""
-#         for i in $(seq 1 $HUMANISM_CD_DEPTH); do
-#                 FINDBASEDIR="../$FINDBASEDIR"
-#                 D=$(dir_in_tree "$FINDBASEDIR" "$*")
-#                 if [[ "$D" ]]; then
-#                        builtin cd "$D"
-#                        pwd > ~/.cwd
-#                        break
-#                 fi
-#         done
-#     fi
-#     }
-#     cd () {
-#         builtin cd "$@"
-#         pwd > ~/.cwd
-#     }
+##
+##   recursive cd  (source in .bash_aliases)
+##
+##   c            go to last dir
+##   c path       go to path, if not in cwd search forward and backward for
+##                *PaTh* in tree
+#
+## (optional) use env var HUMANISM_CD_DEPTH for maxdepth
+#if [ -z $HUMANISM_CD_DEPTH ]; then
+#    HUMANISM_CD_DEPTH=8
+#fi
+#dir_in_tree () {
+#    local BASEDIR="$1"
+#    local SEARCH="${@:2}"
+#    local DEPTH=1
+#    local DIR
+#    for DEPTH in $(seq 1 $HUMANISM_CD_DEPTH); do
+#        # timeout forces stop after one second
+#        if [ "Linux" = "$OS" ]; then
+#            DIR=$(timeout -s SIGKILL 1s \
+#                  /usr/bin/env find $BASEDIR -mindepth $DEPTH -maxdepth $DEPTH -iname "*$SEARCH*" -type d \
+#                           -printf "%C@ %p\n" 2>/dev/null | sort -n | tail -1 | awk '{$1=""; print}' )
+#                        #-exec stat --format "%Y##%n" humanism.sh/dbg (NOTE ISSUE WITH SPACE)
+#        else
+#            DIRS=$(/usr/bin/env find $BASEDIR -depth $DEPTH -iname "*$SEARCH*" -type d \
+#                       -exec stat -f "%m %N" {} 2>/dev/null \; & sleep 0.5; kill $! 2>/dev/null)
+#            if [[ $DIRS ]]; then
+#                DIR=$(echo "$DIRS"  | sort -n | tail -1 | awk '{$1=""; print}')
+#            fi
+#        fi
+#
+#        if [[ $DIR ]]; then
+#            # remove trailing space
+#            echo "${DIR## }"
+#            break
+#        fi
+#        DEPTH=$(($DEPTH+1))
+#    done
+#}
+#c () {
+#    # no args: go to last dir
+#    if [ $# -eq 0 ]; then
+#        if [ -f ~/.cwd ]; then
+#                builtin cd "`cat ~/.cwd`"
+#        else
+#                builtin cd
+#        fi
+#        pwd > ~/.cwd
+#        return 0
+#    # arg1: if has a slash then assume its just a direct path we do not need to find
+#    # oh and, suck up all args as the path. hence no more: cd ./a\ dir\ with\ spaces/
+#    elif [[ "$1" == */* ]]; then
+#            builtin cd "$*"
+#            pwd > ~/.cwd
+#            return 0
+#    # arg1: has no slashes so find it in the cwd
+#    else
+#        D=$(dir_in_tree . "$*")
+#        if [[ "$D" ]]; then
+#            builtin cd "$D"
+#            pwd > ~/.cwd
+#            return 0
+#        fi
+#        # now search backward and upward
+#        echo "<>"
+#        local FINDBASEDIR=""
+#        for i in $(seq 1 $HUMANISM_CD_DEPTH); do
+#                FINDBASEDIR="../$FINDBASEDIR"
+#                D=$(dir_in_tree "$FINDBASEDIR" "$*")
+#                if [[ "$D" ]]; then
+#                       builtin cd "$D"
+#                       pwd > ~/.cwd
+#                       break
+#                fi
+#        done
+#    fi
+#    }
+#    cd () {
+#        builtin cd "$@"
+#        pwd >! ~/.cwd
+#    }

@@ -34,17 +34,22 @@ set runtimepath+=~/.vim/bundle/neobundle.vim
 call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'w0ng/vim-hybrid'
+NeoBundle 'scrooloose/nerdcommenter'
+
+NeoBundle 'godlygeek/tabular'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-commentary'
+"NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tomtom/tlib_vim'
 "NeoBundle 'ntpeters/vim-better-whitespace'
 
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'nanotech/jellybeans.vim'
-NeoBundle 'vim-scripts/phd'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
+"NeoBundle 'nanotech/jellybeans.vim'
+"NeoBundle 'vim-scripts/phd'
+"NeoBundle 'chriskempson/vim-tomorrow-theme'
 
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-notes'
@@ -57,6 +62,7 @@ NeoBundle 'Shougo/vimproc.vim', {'build':'unix'}
 "NeoBundle 'jmcantrell/vim-virtualenv'
 "let g:virtualenv_directory = '~/code/envs/python'
 
+"NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'honza/vim-snippets'
@@ -73,11 +79,11 @@ let g:ycm_filetype_blacklist = {'haskell': 1}
 let g:ycm_key_list_select_completion = ['<CR>']
 let g:ycm_key_list_previous_completion = ['<C-CR>']
 let g:ycm_add_preview_to_completeopt = 0
-set completeopt-=preview
+"set completeopt-=preview
 let g:ycm_key_invoke_completion = '<C-Space>'
 "let g:ycm_enable_diagnostic_highlighting = 0
 "let g:ycm_show_diagnostics_ui = 0
-"let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_signs = 0
 
 call CtrlPSetup()
 call SyntasticSetup()
@@ -108,6 +114,7 @@ call BackupAndSwapFiles()
 call SyntaxHighlighting()
 call SetupTags()
 call NoteSetup()
+"call NerdtreeSetup()
 "call VirtualEnvActivate(vim)
 "}}}
 " GUI"{{{
@@ -137,7 +144,11 @@ augroup filetypedetect
         \ "note":      "note",
         \ "idris":     "idr",
         \ "cpp":       "cpp",
-        \ "elm":       "elm"
+        \ "cc":        "cpp",
+        \ "c":         "c",
+        \ "elm":       "elm",
+        \ "coq":       "v",
+        \ "rust":      "rs"
         \ }
     for [lang, ext] in items(language_extensions)
         if exists('*' . lang . '#enter')
@@ -150,7 +161,7 @@ augroup filetypedetect
 augroup END
 "}}}
 " Keybindings"{{{
-" Leader"{{{
+" Leader
 let g:mapleader=' '
 let g:maplocalleader=','
 map <Leader>w :w<CR>:echo "Written at " . strftime("%c")<CR><ESC>
@@ -164,18 +175,28 @@ map <Leader><cg> :vertical resize -5<CR>
 map <Leader><Down> :resize +5<CR>
 map <Leader><Up> :resize -5<CR>
 
+nmap <Leader>n :bn<CR>
+nmap <Leader>p :bp<CR>
 map <Leader>v :vs
 map <Leader>g :sp
-map <Leader>s :%s//g<Left><Left>
-vmap <Leader>s :s//g<Left><Left>
+map <Leader>s :%s///g<Left><Left><Left>
+vmap <Leader>s :s///g<Left><Left><Left>
 nnoremap <Leader>z za
+
+" Tabular
+vnoremap <Leader>t :Tabularize //<Left>
 
 " Tagbar
 nmap <Leader>= :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 
-"}}}
-" Remaps"{{{
+" Tab navigation
+nnoremap <C-l> <C-w>l
+nnoremap <C-k> <C-w>k
+nnoremap <C-j> <C-w>j
+nnoremap <C-h> <C-w>h
+
+" Remaps
 nnoremap L g_
 nnoremap H ^
 nnoremap k gk
@@ -193,10 +214,14 @@ inoremap <C-j> <Down>
 inoremap <C-k> <Up>
 inoremap <C-h> <Left>
 inoremap <C-l> <Right>
-"}}}
+
+" Save file as sudo
+cmap w!! w !sudo tee > /dev/null %
+
 endfunction
 "}}}
 " Functions"{{{
+" Setup-functions {{{
 " Tabs: Expand tabs to four spaces each. ""{{{
 function! TabBehaviour()
     " Use spaces, not real tabs "
@@ -286,12 +311,13 @@ function! CodeFolding()
     endf
 
     set foldtext=CustomFoldText()
-    " C-style folding "
+
+    " Marker-folding as default.
     set foldmethod=marker
     set foldmarker={{{,}}}
 
-    " Don't autofold unless we have at least 5 lines "
-    set foldminlines=5
+    " Don't autofold unless we have at least 3 lines "
+    set foldminlines=7
 endfunction
 "}}}
 " Airline configuration"{{{
@@ -356,6 +382,20 @@ function! CtrlPSetup()
     map <c-b> :CtrlPLine<CR>
     imap <c-b> <ESC><c-/>
 endfunction
+"}}}
+" Nerdtree directory-tree:"{{{
+function! NerdtreeSetup()
+    " Open tree at startup if no file was specified.
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+    " Close vim if the only window open is a tree.
+    autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+    " Keymaps
+    map <C-d> :NERDTreeToggle<CR>
+endfun
+"}}}
 "}}}
 "}}}
 
