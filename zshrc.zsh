@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 plugins=(archlinux history-substring-search)
 source $ZSH/oh-my-zsh.sh
-source ~/code/scripts/humanism.sh 'cd'
+#source ~/code/scripts/humanism.sh 'cd'
 # Test
 #source $HOME/code/scripts/humanism.sh
 # Path
@@ -45,14 +45,14 @@ export VISUAL='gvim'
 
 # Modules
 extpath="$HOME/code/dotfiles/zsh"
-#source $extpath/misc/aliases.zsh
-#source $extpath/misc/functions.zsh
-#source $extpath/archlinux.zsh
+source $extpath/aliases.zsh
+source $extpath/functions.zsh
+source $extpath/archlinux.zsh
 source $extpath/syntax/zsh-syntax-highlighting.zsh
-#source $extpath/history-search/zsh-history-substring-search.zsh
+source $extpath/history-search/zsh-history-substring-search.zsh
 
 # Prompt
 PROMPT="%F{yellow}%{${fg[yellow]}%}%3~%(0?. . ${fg[red]}%? )%{${reset_color}%}%F{green}| %(?.%F{magenta}.%F{red})>%f "
 
 # Dircolors
-eval `dircolors ~/.dircolors`
+#eval `dircolors ~/.dircolors`

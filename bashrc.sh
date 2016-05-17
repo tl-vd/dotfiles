@@ -20,7 +20,7 @@ source ~/.bash_functions
 
 #export GOPATH="$HOME/develop/gocode"
 #export PATH="$PATH:/home/markus/.gem/ruby/2.2.0/bin:/home/markus/.scripts:$GOPATH/bin"
-
+export PATH="$PATH:/home/markus/bin"
 
 # Automatically cd if input is a directory
 shopt -s autocd

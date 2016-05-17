@@ -29,17 +29,17 @@ degraded color mode to test the approximate color values for accuracy."
   :options '(high normal low)
   :group 'solarized)
 
-(defcustom solarized-bold t
+(defcustom solarized-bold nil
   "Stops Solarized from displaying bold when nil."
   :type 'boolean
   :group 'solarized)
 
-(defcustom solarized-underline t
+(defcustom solarized-underline nil
   "Stops Solarized from displaying underlines when nil."
   :type 'boolean
   :group 'solarized)
 
-(defcustom solarized-italic t
+(defcustom solarized-italic nil
   "Stops Solarized from displaying italics when nil."
   :type 'boolean
   :group 'solarized)
@@ -85,36 +85,24 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
 ;;   (blue    "#268bd2" "#2075c7" "#0087ff" "blue"          "blue")
 ;;   (cyan    "#2aa198" "#259185" "#00afaf" "cyan"          "cyan")
 ;;   (green   "#859900" "#728a05" "#5f8700" "green"         "green"))
-  '((base03  "#161616" "#042028" "#1c1c1c" "brightblack"   "black")
-;;  '((base03  "#1a1919" "#042028" "#1c1c1c" "brightblack"   "black")
-;;    (base02  "#1d2122" "#0a2832" "#262626" "black"         "black")
-    (base02  "#22201d" "#0a2832" "#262626" "black"         "black")
-;;    (base01  "#585955" "#465a61" "#585858" "brightgreen"   "green")
-    (base01  "#595755" "#465a61" "#585858" "brightgreen"   "green")
-;;    (base00  "#656663" "#52676f" "#626262" "brightyellow"  "yellow")
-    (base00  "#666563" "#52676f" "#626262" "brightyellow"  "yellow")
+  '((base03  "#141414" "#042028" "#1c1c1c" "brightblack"   "black")
+    (base02  "#1c1a17" "#0a2832" "#262626" "black"         "black")
+    (base01  "#53514f" "#465a61" "#585858" "brightgreen"   "green")
+    (base00  "#605f5d" "#52676f" "#626262" "brightyellow"  "yellow")
+;    (base02  "#22201d" "#0a2832" "#262626" "black"         "black")
+;    (base01  "#595755" "#465a61" "#585858" "brightgreen"   "green")
+;    (base00  "#666563" "#52676f" "#626262" "brightyellow"  "yellow")
     (base0   "#91908d" "#708183" "#808080" "brightblue"    "blue")
-;;    (base0   "#8f8d87" "#708183" "#808080" "brightblue"    "blue")
     (base1   "#aeadaa" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
-;;    (base1   "#938c81" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
     (base2   "#eee8d5" "#e9e2cb" "#e4e4e4" "white"         "white")
     (base3   "#fdf6e3" "#fcf4dc" "#ffffd7" "brightwhite"   "white")
     (yellow  "#aa8c20" "#a57705" "#af8700" "yellow"        "yellow")
-;;    (yellow  "#a88e1b" "#a57705" "#af8700" "yellow"        "yellow")
     (orange  "#cb4b16" "#bd3612" "#d75f00" "brightred"     "red")
     (red     "#dc322f" "#c60007" "#d70000" "red"           "red")
     (magenta "#d33682" "#c61b6e" "#af005f" "magenta"       "magenta")
     (violet  "#916a85" "#5859b7" "#5f5faf" "brightmagenta" "magenta")
     (blue    "#498fd0" "#2075c7" "#0087ff" "blue"          "blue")
-;;    (blue    "#4779b3" "#2075c7" "#0087ff" "blue"          "blue")
-;;    (blue    "#357bac" "#2075c7" "#0087ff" "blue"          "blue")
-;;    (cyan    "#b1c5c3" "#259185" "#00afaf" "cyan"          "cyan")
-;;    (cyan    "#5e9c94" "#259185" "#00afaf" "cyan"          "cyan")
     (cyan    "#6da3a1" "#259185" "#00afaf" "cyan"          "cyan")
-;;    (green   "#77a21c" "#728a05" "#5f8700" "green"         "green"))
-;;    (green   "#839c20" "#728a05" "#5f8700" "green"         "green"))
-;;    (green   "#7b9c1d" "#728a05" "#5f8700" "green"         "green"))
-;;    (green   "#6c9c1d" "#728a05" "#5f8700" "green"         "green"))
     (green   "#7a9e12" "#728a05" "#5f8700" "green"         "green"))
   "This is a table of all the colors used by the Solarized color theme. Each
    column is a different set, one of which will be chosen based on term

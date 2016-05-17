@@ -1,4 +1,6 @@
-(add-to-list 'custom-theme-load-path (concat config-dir "/themes/solarized-gray"))
+;(add-to-list 'custom-theme-load-path (concat config-dir "/themes/solarized-gray"))
+;(add-to-list 'custom-theme-load-path (concat config-dir "/themes/s3r0"))
+(add-to-list 'custom-theme-load-path (concat config-dir "/themes/emacs-color-theme-solarized"))
 (load-theme 'solarized t)
 (add-hook 'after-make-frame-functions
  	  (set-frame-parameter nil 'background-mode 'dark)

@@ -70,20 +70,20 @@ let g:UltiSnipsExpandTrigger = '<TAB>'
 let g:UltiSnipsJumpForwardTrigger = '<S-TAB>'
 "let g:UltiSnipsJumpBackwardTrigger = '<c-Space'
 
-NeoBundle 'rdnetto/YCM-Generator'
-NeoBundle 'Valloric/YouCompleteMe'
+"NeoBundle 'rdnetto/YCM-Generator'
+"NeoBundle 'Valloric/YouCompleteMe'
 "let g:ycm_allow_changing_updatetime = 0
-let g:ycm_confirm_extra_conf=0
-let g:ycm_semantic_triggers = {'haskell' : ['.', '(']}
-let g:ycm_filetype_blacklist = {'haskell': 1}
-let g:ycm_key_list_select_completion = ['<CR>']
-let g:ycm_key_list_previous_completion = ['<C-CR>']
-let g:ycm_add_preview_to_completeopt = 0
+"let g:ycm_confirm_extra_conf=0
+"let g:ycm_semantic_triggers = {'haskell' : ['.', '(']}
+"let g:ycm_filetype_blacklist = {'haskell': 1}
+"let g:ycm_key_list_select_completion = ['<CR>']
+"let g:ycm_key_list_previous_completion = ['<C-CR>']
+"let g:ycm_add_preview_to_completeopt = 0
 "set completeopt-=preview
-let g:ycm_key_invoke_completion = '<C-Space>'
+"let g:ycm_key_invoke_completion = '<C-Space>'
 "let g:ycm_enable_diagnostic_highlighting = 0
 "let g:ycm_show_diagnostics_ui = 0
-let g:ycm_enable_diagnostic_signs = 0
+"let g:ycm_enable_diagnostic_signs = 0
 
 call CtrlPSetup()
 call SyntasticSetup()
@@ -274,7 +274,7 @@ endfunction
 function! SyntaxHighlighting()
     " Enable syntax highlighting "
     syntax on
-    colorscheme solarized
+    colorscheme default
 endfunction
 "}}}
 " Note Setup: stuff ""{{{

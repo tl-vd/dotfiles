@@ -8,13 +8,24 @@
 (global-set-key "\M-w" 'move-end-of-line)
 (global-set-key "\M-q" 'move-beginning-of-line)
 
-(global-set-key "\C-l" 'forward-word)
-(global-set-key "\C-h" 'backward-word)
+;(global-set-key "\C-l" 'forward-word)
+;(global-set-key "\C-h" 'backward-word)
 
 (global-set-key "\C-f" 'isearch-forward)
 (global-set-key "\C-s" 'save-buffer)
 (global-set-key "\M-o" 'find-file)
 (global-set-key "\C-u" 'undo)
 
-(global-set-key "\M-o" 'find-file)
+(global-set-key "\M-u" 'universal-argument)
+
 (global-set-key "\M- " 'set-mark-command)
+
+(global-set-key "\M-1" 'delete-other-windows)
+(global-set-key "\M-2" 'split-window-below)
+(global-set-key "\M-3" 'split-window-right)
+
+(global-set-key "\C-o" 'other-window)
+
+(global-set-key "\M-w" 'kill-ring-save)
+
+(define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
