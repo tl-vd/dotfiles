@@ -25,6 +25,7 @@ floating_modifier $mod
 # start a terminal
 bindsym $mod+t exec gnome-terminal
 bindsym $mod+e exec emacs
+bindsym $mod+d exec kupfer
 #bindsym $mod+Return exec xfce4-terminal
 
 # kill focused window

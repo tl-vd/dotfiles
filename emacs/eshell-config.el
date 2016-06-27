@@ -2,7 +2,13 @@
 (setq eshell-scroll-to-bottom-on-input t)
 
 (defalias 'ff 'find-file)
-(defalias 'up '(eshell/cd ..))
+;;(defalias 'up '(eshell/cd ..))
+
+(defun eshell/up (&optional N)
+  (unless N (setq N 1))
+  (dotimes (i N)
+    (eshell/cd "..")))
+
 ;(defalias 'ls (concat ls " -FAXh --group-directories-first --color=auto"))
 ;(add-hook 'eshell-mode-hook
 ;          (lambda ()
