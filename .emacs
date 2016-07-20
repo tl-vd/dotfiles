@@ -23,37 +23,33 @@
 
 ;; use-package
 (require 'use-package)
-;(setq use-package-always-ensure t)
+(setq use-package-always-ensure t)
 (require 'bind-key) ;use-package's bind-key
 ;;(require 'diminish) ;use-package's diminish
 
 ;; Temporary package space
-; (require 'load-dir)
-
 (defvar config-dir (concat (getenv "HOME") "/emacs"))
 (setq load-path (cons config-dir load-path))
-;;(normal-top-level-add-subdirs-to-load-path)
 
-;;(load-dir-one  (expand-file-name "~/emacs"))
-(load-library "general")
-(load-library "keys")
-(load-library "color")
-                                        ;(load-library "funcs")
+(require 'general)
+(require 'keys)
+(require 'color)
 (require 'funcs)
 
 ;; Packages' configs
-(load-library "yasnippet-config")
-(load-library "autocomplete-config")
-;;(load-library "company-config")
-(load-library "iedit-config")
-(load-library "autopair-config")
-(require 'flycheck-config) ;(load-library "flycheck-config")
-(load-library "ido-config")
-(load-library "cl-config")
-;;(load-library "vimish-fold-config")
-(load-library "origami-config")
-;;(require 'paredit-config)
+(require 'yasnippet-config)
+(require 'autocomplete-config)
+(require 'autopair-config)
+(require 'flycheck-config)
+(require 'ido-config)
+(require 'cl-config)
+(require 'origami-config)
 (require 'eshell-config)
+;; (load-library "company-config")
+;; (load-library "iedit-config")
+;; (load-library "vimish-fold-config")
+;; (require 'paredit-config)
+
 ;; Languages configs
 (load-library "lang/c-common")
 (load-library "lang/elisp")

@@ -11,6 +11,18 @@ buffer is not visiting a file."
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 
+(defun toggle-comment-on-line ()
+  "comment or uncomment current line"
+  (interactive)
+  (comment-or-uncomment-region (line-beginning-position) (line-end-position)))
+
+(defun toggle-comment-on-line-if-not-at-end-of-line-and-no-active-region-else-comment-dwim (arg)
+  (interactive "P")
+  (if (not (or (use-region-p)
+               (looking-at "[? ?\t]*\n")))
+      (toggle-comment-on-line)
+    (comment-dwim arg)))
+    
 (defun smart-beginning-of-line ()
   "Move point to first non-whitespace character or beginning-of-line.
 
@@ -27,8 +39,7 @@ If point was already at that position, move point to beginning of line."
 (defun newline-below ()
   (interactive)
   (end-of-line)
-  (newline)
-  )
+  (newline))
 (global-set-key [(shift return)] 'newline-below)
 
 
@@ -58,61 +69,82 @@ as input."
    t))
 (global-set-key (kbd "M-\"") 'shell-command-on-buffer)
 
-(defun blockfmt-buffer ()
-  "Asks for a command and executes it in inferior shell with current buffer
-as input."
-  (interactive)
-  (shell-command-on-region
-   (point-min) (point-max)
-   "/home/markus/bin/blockfmt"
-   t
-   t))
-(global-set-key (kbd "M-\\") 'blockfmt-buffer)
+;;(defun blockfmt-buffer ()
+;;  "Asks for a command and executes it in inferior shell with current buffer
+;;as input."
+;;  (interactive)
+;;  (shell-command-on-region
+;;   (point-min) (point-max)
+;;   "/home/markus/bin/blockfmt"
+;;   t
+;;   t))
+;;(global-set-key (kbd "M-\\") 'blockfmt-buffer)
 
 
-; Explicit hungry delete
-;(defvar hungry-delete-whitespace-chars " `\n'`\t'`\r'")
-;
-;(defun backward-char-skip-whitespace ()
-;  (interactive)
-;  (while (progn
-;           (skip-chars-backward hungry-delete-whitespace-chars)
-;           (and (eolp)
-;                (eq (char-before) ?\\)))
-;    (backward-char))
-;  (while (get-text-property (point) 'read-only)
-;    (forward-char)))
+;(defun backward-kill-word-or-delete-ws-or-symbols-except-delimiters ()
+  ;(while (not (looking-back "[({\[a-zA-Z0-9]"))
+    ;(delete-char -1)))
 
-(defun backward-delete-ws-iter ()
-  (let ((no_ws nil))
-  (while (or (eq (char-before) ? )
-             (eq (char-before) ?\n)
-             (eq (char-before) ?\t)
-             (eq (char-before) ?\r))
-    ;(message "dc-1")
-    (setq no_ws t)
-    (delete-char -1))
-  no_ws))
+;; We want this to:
+;;  if we are looking back at ?\n
+;;  then delete all whitespace backwards until we are looking at [anything]\n\n (i.e. so that we are on the first empty line)
+;;  else delete all whitespace backwards until we hit a ?\n
+(defun backward-delete-ws-iter (&optional newline_disable)
+  (let
+      ((no_ws nil)
+       (newline_count (if newline_disable -1 0)))
+    (if (eq (char-before) ?\n)
+        (while (or (eq (char-before) ? ) ; then
+                   (eq (char-before) ?\n)
+                   (eq (char-before) ?\t)
+                   (eq (char-before) ?\r))
+          ;;(message "dc-1")
+          (if (and (>= newline_count 0)(eq (char-before) ?\n))
+              (setq newline_count (+ newline_count 1)))
+          (setq no_ws t)
+          (delete-char -1))
+      (while (or (eq (char-before) ? ) ; else
+                 (eq (char-before) ?\t)
+                 (eq (char-before) ?\r))
+        ;;(message "dc-1")
+        (setq no_ws t)
+        (delete-char -1)))
+    (if (> newline_count 1)
+        (insert ?\n))
+    no_ws))
 
 (defun hungry-backward-delete-char ()
   (interactive)
   (if (not (backward-delete-ws-iter))
       (delete-char -1)
     t))
- 
-  
+
 (defun hungry-backward-kill-word ()
   (interactive)
   (if (eq (char-before) ? ) (delete-char -1))
-  (if (not (backward-delete-ws-iter))
+  (if (not (backward-delete-ws-iter t))
       (backward-kill-word 1)
     t))
-  ;(let ((here (point)))
-  ;  (if (eq (skip-chars-backward " `\n'`\t'`\r'") 0)
-  ;      (backward-kill-word 1)
-  ;    (delete-region (point) here))))
 
-(provide 'funcs);
+(defun forward-move-word (&optional pattern-construct-str-addition)
+  (interactive)
+  (let ((word-pattern (concat "[a-zA-Z0-9\n" pattern-construct-str-addition "]")))
+  (if (looking-at word-pattern)
+      (while (looking-at word-pattern)
+        (forward-char))
+    (while (not (looking-at word-pattern))
+      (forward-char)))))
 
+(defun backward-delete-char-selective (chars-to-delete)
+  (let ((deleted nil))
+    (while (looking-back (concat "[" chars-to-delete "]"))
+      (delete-char -1)
+      (setq deleted t))
+    deleted))
 
-
+(defun smart-backward-kill-word ()
+  (interactive)
+  (let (oldpos (point))
+    ))
+ 
+(provide 'funcs)

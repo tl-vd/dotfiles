@@ -12,3 +12,5 @@
 ;;	  (set-foreground-color "#BAB6B1")
 ;;	  ;;(set-cursor-color "#40FF40")
 ;;	  )
+
+(provide 'color)
