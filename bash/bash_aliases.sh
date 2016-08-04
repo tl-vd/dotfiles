@@ -25,3 +25,6 @@ alias ycmconfig='/home/markus/.vim/bundle/YCM-Generator/config_gen.py'
 nb='source /home/markus/code/envs/ihaskell/pyth/bin/activate && ipython notebook --profile=ihaskell'
 alias nb=$nb
 alias notebook=$nb
+
+# "Spawn inferior shell"-programs
+alias emacs='emacs &'
