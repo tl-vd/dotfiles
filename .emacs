@@ -28,7 +28,7 @@
 ;;(require 'diminish) ;use-package's diminish
 
 ;; Temporary package space
-(defvar config-dir (concat (getenv "HOME") "/emacs"))
+(defvar config-dir (concat (getenv "HOME") "code/dotfiles/emacs"))
 (setq load-path (cons config-dir load-path))
 
 (require 'general)
@@ -54,3 +54,4 @@
 (load-library "lang/c-common")
 (load-library "lang/elisp")
 (load-library "lang/rust")
+;; test
