@@ -4,11 +4,11 @@
     (defalias 'cl-case 'case))
   )
 
-(defconst solarized-description
+(defconst s3r0-description
   "Color theme by Ethan Schoonover, created 2011-03-24.
 Ported to Emacs by Greg Pfeil, http://ethanschoonover.com/solarized.")
 
-(defcustom solarized-termcolors 16
+(defcustom s3r0-termcolors 16
   "This is set to 16 by default, meaning that Solarized will attempt to use the
 standard 16 colors of your terminal emulator. You will need to set those colors
 to the correct Solarized values either manually or by importing one of the many
@@ -17,34 +17,34 @@ colorscheme available for popular terminal emulators and Xdefaults."
   :options '(16 256)
   :group 'solarized)
 
-(defcustom solarized-degrade nil
+(defcustom s3r0-degrade nil
   "For test purposes only; when in GUI mode, forces Solarized to use the 256
 degraded color mode to test the approximate color values for accuracy."
   :type 'boolean
   :group 'solarized)
 
-(defcustom solarized-diff-mode 'normal
+(defcustom s3r0-diff-mode 'normal
   "Sets the level of highlighting to use in diff-like modes."
   :type 'symbol
   :options '(high normal low)
   :group 'solarized)
 
-(defcustom solarized-bold nil
+(defcustom s3r0-bold nil
   "Stops Solarized from displaying bold when nil."
   :type 'boolean
   :group 'solarized)
 
-(defcustom solarized-underline nil
+(defcustom s3r0-underline nil
   "Stops Solarized from displaying underlines when nil."
   :type 'boolean
   :group 'solarized)
 
-(defcustom solarized-italic nil
+(defcustom s3r0-italic nil
   "Stops Solarized from displaying italics when nil."
   :type 'boolean
   :group 'solarized)
 
-(defcustom solarized-contrast 'normal
+(defcustom s3r0-contrast 'normal
   "Stick with normal! It's been carefully tested. Setting this option to high or
 low does use the same Solarized palette but simply shifts some values up or
 down in order to expand or compress the tonal range displayed."
@@ -52,7 +52,7 @@ down in order to expand or compress the tonal range displayed."
   :options '(high normal low)
   :group 'solarized)
 
-(defcustom solarized-broken-srgb
+(defcustom s3r0-broken-srgb
   (if (and (eq system-type 'darwin) (eq window-system 'ns))
       (not (and (boundp 'ns-use-srgb-colorspace)
                 ns-use-srgb-colorspace))
@@ -60,57 +60,63 @@ down in order to expand or compress the tonal range displayed."
   "Emacs bug #8402 results in incorrect color handling on Macs. If this is t
 \(the default on Macs), Solarized works around it with alternative colors.
 However, these colors are not totally portable, so you may be able to edit
-the \"Gen RGB\" column in solarized-definitions.el to improve them further."
+the \"Gen RGB\" column in s3r0-definitions.el to improve them further."
   :type 'boolean
   :group 'solarized)
 
 ;; FIXME: The Generic RGB colors will actually vary from device to device, but
 ;;        hopefully these are closer to the intended colors than the sRGB values
 ;;        that Emacs seems to dislike
-(defvar solarized-colors           ; ANSI(Solarized terminal)
+(defvar s3r0-colors           ; ANSI(Solarized terminal)
   ;; name     sRGB      Gen RGB   256       16              8
-;;  '((base03  "#002b36" "#042028" "#1c1c1c" "brightblack"   "black")
-;;   (base02  "#073642" "#0a2832" "#262626" "black"         "black")
-;;   (base01  "#586e75" "#465a61" "#585858" "brightgreen"   "green")
-;;   (base00  "#657b83" "#52676f" "#626262" "brightyellow"  "yellow")
-;;   (base0   "#839496" "#708183" "#808080" "brightblue"    "blue")
-;;   (base1   "#93a1a1" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
-;;   (base2   "#eee8d5" "#e9e2cb" "#e4e4e4" "white"         "white")
-;;   (base3   "#fdf6e3" "#fcf4dc" "#ffffd7" "brightwhite"   "white")
-;;   (yellow  "#b58900" "#a57705" "#af8700" "yellow"        "yellow")
-;;   (orange  "#cb4b16" "#bd3612" "#d75f00" "brightred"     "red")
-;;   (red     "#dc322f" "#c60007" "#d70000" "red"           "red")
-;;   (magenta "#d33682" "#c61b6e" "#af005f" "magenta"       "magenta")
-;;   (violet  "#6c71c4" "#5859b7" "#5f5faf" "brightmagenta" "magenta")
-;;   (blue    "#268bd2" "#2075c7" "#0087ff" "blue"          "blue")
-;;   (cyan    "#2aa198" "#259185" "#00afaf" "cyan"          "cyan")
-;;   (green   "#859900" "#728a05" "#5f8700" "green"         "green"))
-  '((base03  "#141414" "#042028" "#1c1c1c" "brightblack"   "black")
-    (base02  "#1c1a17" "#0a2832" "#262626" "black"         "black")
-    (base01  "#53514f" "#465a61" "#585858" "brightgreen"   "green")
-    (base00  "#605f5d" "#52676f" "#626262" "brightyellow"  "yellow")
-;    (base02  "#22201d" "#0a2832" "#262626" "black"         "black")
-;    (base01  "#595755" "#465a61" "#585858" "brightgreen"   "green")
-;    (base00  "#666563" "#52676f" "#626262" "brightyellow"  "yellow")
-    (base0   "#91908d" "#708183" "#808080" "brightblue"    "blue")
-    (base1   "#aeadaa" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
+   '((base03  "#121212" "#042028" "#1c1c1c" "brightblack"   "black")
+    (base02  "#1c1a17" "#0a2832" "#262626" "black"         "black")  
+    (base01  "#4e4c48" "#465a61" "#585858" "brightgreen"   "green")  ;; Minibuffer's bar
+    (base00  "#7d7868" "#52676f" "#626262" "brightyellow"  "yellow") ;; Comment
+    (base0   "#807a70" "#708183" "#808080" "brightblue"    "blue")   ;; FG
+    (base1   "#9c9685" "#81908f" "#8a8a8a" "brightcyan"    "cyan")   ;; FG?
+;    (base1   "#9f8b78" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
     (base2   "#eee8d5" "#e9e2cb" "#e4e4e4" "white"         "white")
     (base3   "#fdf6e3" "#fcf4dc" "#ffffd7" "brightwhite"   "white")
-    (yellow  "#aa8c20" "#a57705" "#af8700" "yellow"        "yellow")
-    (orange  "#cb4b16" "#bd3612" "#d75f00" "brightred"     "red")
-    (red     "#dc322f" "#c60007" "#d70000" "red"           "red")
-    (magenta "#d33682" "#c61b6e" "#af005f" "magenta"       "magenta")
-    (violet  "#916a85" "#5859b7" "#5f5faf" "brightmagenta" "magenta")
-    (blue    "#498fd0" "#2075c7" "#0087ff" "blue"          "blue")
-    (cyan    "#6da3a1" "#259185" "#00afaf" "cyan"          "cyan")
-    (green   "#7a9e12" "#728a05" "#5f8700" "green"         "green"))
+    (yellow  "#9d7a2d" "#a57705" "#af8700" "yellow"        "yellow")
+    (orange  "#84452a" "#bd3612" "#d75f00" "brightred"     "red")
+;    (orange  "#ac5d2f" "#bd3612" "#d75f00" "brightred"     "red")
+    (red     "#8a3829" "#c60007" "#d70000" "red"           "red")
+    (magenta "#614445" "#c61b6e" "#af005f" "magenta"       "magenta")
+    (violet  "#6c4b52" "#5859b7" "#5f5faf" "brightmagenta" "magenta")
+;    (blue    "#4f6269" "#2075c7" "#0087ff" "blue"          "blue")
+;    (blue    "#4b6d76" "#2075c7" "#0087ff" "blue"          "blue")
+    (blue    "#3f6a7e" "#2075c7" "#0087ff" "blue"          "blue")
+    (cyan    "#677974" "#259185" "#00afaf" "cyan"          "cyan")
+    (green   "#707e3b" "#728a05" "#5f8700" "green"         "green"))
+
+;      '((base03  "#121212" "#042028" "#1c1c1c" "brightblack"   "black")
+;    (base02  "#1c1a17" "#0a2832" "#262626" "black"         "black")
+;    (base01  "#4e4c48" "#465a61" "#585858" "brightgreen"   "green")
+;    (base00  "#aaaaaa" "#52676f" "#626262" "brightyellow"  "yellow")
+;    (base0   "#7d7868" "#708183" "#808080" "brightblue"    "blue")
+;    (base1   "#7d7868" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
+;;    (base1   "#9f8b78" "#81908f" "#8a8a8a" "brightcyan"    "cyan")
+;    (base2   "#eee8d5" "#e9e2cb" "#e4e4e4" "white"         "white")
+;    (base3   "#fdf6e3" "#fcf4dc" "#ffffd7" "brightwhite"   "white")
+;    (yellow  "#8d6d28" "#a57705" "#af8700" "yellow"        "yellow")
+;    (orange  "#84452a" "#bd3612" "#d75f00" "brightred"     "red")
+;;    (orange  "#ac5d2f" "#bd3612" "#d75f00" "brightred"     "red")
+;    (red     "#8a3829" "#c60007" "#d70000" "red"           "red")
+;    (magenta "#614445" "#c61b6e" "#af005f" "magenta"       "magenta")
+;    (violet  "#473333" "#5859b7" "#5f5faf" "brightmagenta" "magenta")
+;;    (blue    "#4f6269" "#2075c7" "#0087ff" "blue"          "blue")
+;    (blue    "#596569" "#2075c7" "#0087ff" "blue"          "blue")
+;    (cyan    "#4e6b74" "#259185" "#00afaf" "cyan"          "cyan")
+;    (green   "#647035" "#728a05" "#5f8700" "green"         "green"))
+
   "This is a table of all the colors used by the Solarized color theme. Each
    column is a different set, one of which will be chosen based on term
    capabilities, etc.")
 
-(defun solarized-face-for-index (facespec index &optional light)
+(defun s3r0-face-for-index (facespec index &optional light)
   "Creates a face from facespec where the colors use the names from
-  `solarized-colors`."
+  `s3r0-colors`."
   (let ((new-fontspec (copy-sequence facespec)))
     (dolist (property '(:foreground :background :color))
       (let ((color-name (plist-get new-fontspec property)))
@@ -140,53 +146,53 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
                     (otherwise color-name))))
           (plist-put new-fontspec
                      property
-                     (nth index (assoc color-name solarized-colors))))))
+                     (nth index (assoc color-name s3r0-colors))))))
     (when (plist-get new-fontspec :box)
       (plist-put new-fontspec
                  :box
-                 (solarized-face-for-index (plist-get new-fontspec :box) index
+                 (s3r0-face-for-index (plist-get new-fontspec :box) index
                                            light)))
     new-fontspec))
 
 (defun create-face-spec (name facespec)
   `(,name ((((background dark) (type graphic))
-            ,(solarized-face-for-index facespec
-                                       (cond (solarized-degrade     3)
-                                             (solarized-broken-srgb 2)
+            ,(s3r0-face-for-index facespec
+                                       (cond (s3r0-degrade     3)
+                                             (s3r0-broken-srgb 2)
                                              (t                     1))))
            (((background dark) (type tty) (min-colors 256))
-            ,(solarized-face-for-index facespec
-                                       (if (= solarized-termcolors 16) 4 3)))
+            ,(s3r0-face-for-index facespec
+                                       (if (= s3r0-termcolors 16) 4 3)))
            (((background dark) (type tty) (min-colors  16))
-            ,(solarized-face-for-index facespec 4))
+            ,(s3r0-face-for-index facespec 4))
            (((background dark) (type tty) (min-colors   8))
-            ,(solarized-face-for-index facespec 5))
+            ,(s3r0-face-for-index facespec 5))
            (((background light) (type graphic))
-            ,(solarized-face-for-index facespec
-                                       (cond (solarized-degrade     3)
-                                             (solarized-broken-srgb 2)
+            ,(s3r0-face-for-index facespec
+                                       (cond (s3r0-degrade     3)
+                                             (s3r0-broken-srgb 2)
                                              (t                     1))
                                        t))
            (((background light) (type tty) (min-colors 256))
-            ,(solarized-face-for-index facespec
-                                       (if (= solarized-termcolors 16) 4 3)
+            ,(s3r0-face-for-index facespec
+                                       (if (= s3r0-termcolors 16) 4 3)
                                        t))
            (((background light) (type tty) (min-colors  16))
-            ,(solarized-face-for-index facespec 4 t))
+            ,(s3r0-face-for-index facespec 4 t))
            (((background light) (type tty) (min-colors   8))
-            ,(solarized-face-for-index facespec 5 t)))))
+            ,(s3r0-face-for-index facespec 5 t)))))
 
-(defun solarized-color-definitions ()
-  (let ((bold        (if solarized-bold 'bold        'unspecified))
-        (bright-bold (if solarized-bold 'unspecified 'bold))
-        (underline   (if solarized-underline t 'unspecified))
+(defun s3r0-color-definitions ()
+  (let ((bold        (if s3r0-bold 'bold        'unspecified))
+        (bright-bold (if s3r0-bold 'unspecified 'bold))
+        (underline   (if s3r0-underline t 'unspecified))
         (opt-under   'unspecified)
-        (italic      (if solarized-italic 'italic 'unspecified)))
-    (cond ((eq 'high solarized-contrast)
+        (italic      (if s3r0-italic 'italic 'unspecified)))
+    (cond ((eq 'high s3r0-contrast)
            (let ((orig-base3 base3))
              (rotatef base01 base00 base0 base1 base2 base3)
              (setf base3 orig-base3)))
-          ((eq 'low solarized-contrast)
+          ((eq 'low s3r0-contrast)
            (setf back      base02
                  opt-under t)))
     (let ((bg-back   '(:background back))
@@ -299,7 +305,7 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
                 (custom-state (,@fg-green))
                 (custom-variable-tag (,@fg-base1))
                 ;; diff - DiffAdd, DiffChange, DiffDelete, and DiffText
-                ,@(cl-case solarized-diff-mode
+                ,@(cl-case s3r0-diff-mode
                     (high
                      `((diff-added (,@fmt-revr ,@fg-green))
                        (diff-changed (,@fmt-revr ,@fg-yellow))
@@ -794,11 +800,11 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
   (add-to-list 'custom-theme-load-path
                (file-name-as-directory (file-name-directory load-file-name))))
 
-(defmacro create-solarized-theme (name description color-definitions)
+(defmacro create-s3r0-theme (name description color-definitions)
   `(progn
      (deftheme ,name ,description)
      (apply 'custom-theme-set-faces
             ',name ,color-definitions)
      (provide-theme ',name)))
 
-(provide 'solarized-definitions)
+(provide 's3r0-definitions)

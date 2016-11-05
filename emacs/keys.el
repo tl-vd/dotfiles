@@ -29,6 +29,7 @@
 (global-set-key "\C-s" 'save-buffer)
 (global-set-key "\M-o" 'find-file)
 (global-set-key "\C-u" 'undo)
+(global-set-key (kbd "C-S-u") 'undo-only)
 
 (global-set-key "\M-u" 'universal-argument)
 
@@ -42,7 +43,6 @@
 
 (global-set-key "\M-w" 'kill-ring-save)
 
-(global-set-key "\C-U" 'undo-only)
 
 (global-set-key "\M-/" 'toggle-comment-on-line-if-not-at-end-of-line-and-no-active-region-else-comment-dwim)
 ;; (global-set-key "\M-/" 'comment-dwim)

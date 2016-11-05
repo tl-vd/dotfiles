@@ -107,5 +107,5 @@
 
   ;; No semi-colon indent
   (setq c-hanging-semi&comma-criteria '((lambda () 'stop))))
-  
+
 (add-hook 'c-mode-common-hook 'c-common-hook-setup)

@@ -1,7 +1,12 @@
+# MSYS/MINGW/WINDOWS compatibility
+if [[ "$MSYSTEM" ]]; then
+    alias sudo=
+fi
+
 # Meta
-alias aliae="gvim ~/.bash_aliases"
-alias functae="gvim ~/.bash_functions"
-alias bashrc="gvim ~/.bashrc"
+alias aliae="$VISUAL ~/code/dotfiles/bash/bash_aliases.sh"
+alias functae="$VISUAL ~/code/dotfiles/bash/bash_functions.sh"
+alias bashrc="$VISUAL ~/code/dotfiles/bashrc.sh"
 alias reload='source ~/.bashrc'
 
 # Internal
@@ -13,6 +18,10 @@ alias lsf='ls -a | grep'
 alias cp='cp -i'
 alias di='di -f TM1ub -n' # disk-info, -format[fsType, Mountpoint, %(1), Used, Blocks(total)], -noheaders
 #alias df='df -f TM1ub -n' # disk-info, -format[fsType, Mountpoint, %(1), Used, Blocks(total)], -noheaders
+
+# Pacman
+alias pss='pacman -Ss'
+alias pacin='sudo pacman -S'
 
 # Misc
 alias cmdstats='cut -f1 -d" " ~/.bash_history | sort | uniq -c | sort -nr | head -n 30'
